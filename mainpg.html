@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotive Catalogue</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background.webp'); /* Replace with actual background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 20px;
+            text-transform: uppercase;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        /* Welcome Text */
+        .welcome-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInZoom 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes fadeInZoom {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Login Button */
+        .login-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+        }
+
+        /* Login Popup */
+        .login-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        select, input {
+            width: 85%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#">Home</a>
+        <button class="login-btn" onclick="openLogin()">Login</button>
+        <a href="#">Admin Dashboard</a>
+        <a href="#">Engineer Dashboard</a>
+    </div>
+
+    <!-- Welcome Text -->
+    <div class="welcome-text">Welcome to Automotive Catalogue</div>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="login-popup">
+        <span class="close-btn" onclick="closeLogin()">✖</span>
+        <h2>Login</h2>
+        <form>
+            <select id="userType" required>
+                <option value="" disabled selected>Choose User Type</option>
+                <option value="admin">Admin</option>
+                <option value="engineer">Engineer</option>
+            </select>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function openLogin() {
+            document.getElementById("loginPopup").style.display = "block";
+        }
+
+        function closeLogin() {
+            document.getElementById("loginPopup").style.display = "none";
+        }
+
+        function login() {
+            const userType = document.getElementById("userType").value;
+            if (userType === "admin") {
+                window.location.href = "admin.html";
+            } else {
+                window.location.href = "engineer.html";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

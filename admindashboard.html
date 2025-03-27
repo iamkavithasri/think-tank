@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background.webp'); /* Replace with actual background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 0 20px;
+            text-transform: uppercase;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: #007bff;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .dashboard-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: white;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .dashboard-content {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .dashboard-content ul li {
+            font-size: 1.2rem;
+            padding: 10px;
+            border-bottom: 1px solid white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dashboard-content ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #content-area {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            color: white;
+            width: 80%;
+            text-align: center;
+            display: none;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        .video-container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        video {
+            max-width: 300px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="#">Admin Dashboard</a>
+        <a href="engineer.html">Engineer Dashboard</a>
+        <a href="logout.html">Logout</a>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="dashboard-text">Admin Dashboard</div>
+
+        <div class="dashboard-content">
+            <h2>Admin Controls</h2>
+            <ul>
+                <li onclick="loadContent('manage-listings')">📂 Manage Car Listings</li>
+                <li onclick="loadContent('upload-videos')">📸 Upload & Manage Videos</li>
+                <li onclick="loadContent('analytics')">📊 View Analytics</li>
+                <li onclick="loadContent('manage-users')">👥 Manage Users</li>
+                <li onclick="loadContent('settings')">⚙️ System Settings</li>
+            </ul>
+        </div>
+
+        <div id="content-area">
+            <h2>Welcome, Admin!</h2>
+            <p>Select an option to view details.</p>
+        </div>
+    </div>
+
+    <script>
+        function loadContent(option) {
+            const contentArea = document.getElementById('content-area');
+            contentArea.style.display = "block"; // Show content area
+
+            let content = '';
+            if (option === 'upload-videos') {
+                content = `
+                    <h2>Upload & Manage Videos</h2>
+                    <p>Upload promotional videos for your car listings.</p>
+                    <input type="file" id="videoUpload" accept="video/mp4" onchange="previewVideo(event)">
+                    <div class="video-container" id="videoList"></div>
+                `;
+            } else {
+                switch(option) {
+                    case 'manage-listings':
+                        content = "<h2>Manage Car Listings</h2><p>Here you can add, edit, or delete car listings.</p>";
+                        break;
+                    case 'analytics':
+                        content = "<h2>View Analytics</h2><p>Track user engagement and sales performance.</p>";
+                        break;
+                    case 'manage-users':
+                        content = "<h2>Manage Users</h2><p>View and control access for users in your system.</p>";
+                        break;
+                    case 'settings':
+                        content = "<h2>System Settings</h2><p>Modify application settings and configurations.</p>";
+                        break;
+                    default:
+                        content = "<h2>Welcome, Admin!</h2><p>Select an option to view details.</p>";
+                }
+            }
+
+            contentArea.innerHTML = content;
+        }
+
+        function previewVideo(event) {
+            const files = event.target.files;
+            const videoList = document.getElementById('videoList');
+            
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type === "video/mp4") {
+                    const videoURL = URL.createObjectURL(files[i]);
+
+                    const videoElement = document.createElement('video');
+                    videoElement.src = videoURL;
+                    videoElement.controls = true;
+                    videoElement.width = 300;
+
+                    videoList.appendChild(videoElement);
+                } else {
+                    alert("Only MP4 videos are supported.");
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
